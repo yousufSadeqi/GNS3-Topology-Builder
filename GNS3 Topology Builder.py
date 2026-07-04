@@ -1,8 +1,8 @@
 import requests   
 
 SERVER = "http://127.0.0.1:3080"
-AUTH = ("admin", "YOUR_PASSWORD")  # Replace with your GNS3 server credentials
-PROJECT_NAME = "tests"
+AUTH = ("admin", "K6fbnTZ9GqYmu6fvkDx3pY6NgtHYtPLadr79u2HT6WLjt2RUlyZJg0T7hy3qa8an")
+PROJECT_NAME = "Ai generated Topology"
 
 
 def get_json(url):
@@ -77,10 +77,15 @@ def create_pc(name, x, y):
 r1 = create_router("R1", -300, 0)
 r2 = create_router("R2", 0, 0)
 r3 = create_router("R3", 300, 0)
+# Additional routers, switches, and PCs (same style as above)
+r4 = create_router("R4", 600, 0)
+r5 = create_router("R5", 900, 0)
 
 sw1 = create_switch("SW1", -300, 200)
 sw2 = create_switch("SW2", 0, 200)
 sw3 = create_switch("SW3", 300, 200)
+sw4 = create_switch("SW4", 600, 200)
+sw5 = create_switch("SW5", 900, 200)
 
 pc1 = create_pc("PC1", -400, 400)
 pc2 = create_pc("PC2", -200, 400)
@@ -88,7 +93,10 @@ pc3 = create_pc("PC3", -100, 400)
 pc4 = create_pc("PC4", 100, 400)
 pc5 = create_pc("PC5", 200, 400)
 pc6 = create_pc("PC6", 400, 400)
-
+pc7  = create_pc("PC7", 500, 400)
+pc8  = create_pc("PC8", 700, 400)
+pc9  = create_pc("PC9", 800, 400)
+pc10 = create_pc("PC10", 1000, 400)
 
 # Links
 def link(a, ap, b, bp, a_adapter=0, b_adapter=0):
@@ -103,9 +111,14 @@ def link(a, ap, b, bp, a_adapter=0, b_adapter=0):
 link(r1["node_id"], 0, sw1["node_id"], 0)
 link(r2["node_id"], 0, sw2["node_id"], 0)
 link(r3["node_id"], 0, sw3["node_id"], 0)
+# Router <-> Switch links
+link(r4["node_id"], 0, sw4["node_id"], 0)
+link(r5["node_id"], 0, sw5["node_id"], 0)
 
 link(r1["node_id"], 0, r2["node_id"], 0, a_adapter=1, b_adapter=1)
 link(r2["node_id"], 0, r3["node_id"], 0, a_adapter=2, b_adapter=1)
+link(r3["node_id"], 0, r4["node_id"], 0, a_adapter=2, b_adapter=1)
+link(r4["node_id"], 0, r5["node_id"], 0, a_adapter=2, b_adapter=1)
 
 link(sw1["node_id"], 1, pc1["node_id"], 0)
 link(sw1["node_id"], 2, pc2["node_id"], 0)
@@ -113,5 +126,9 @@ link(sw2["node_id"], 1, pc3["node_id"], 0)
 link(sw2["node_id"], 2, pc4["node_id"], 0)
 link(sw3["node_id"], 1, pc5["node_id"], 0)
 link(sw3["node_id"], 2, pc6["node_id"], 0)
+link(sw4["node_id"], 1, pc7["node_id"], 0)
+link(sw4["node_id"], 2, pc8["node_id"], 0)
+link(sw5["node_id"], 1, pc9["node_id"], 0)
+link(sw5["node_id"], 2, pc10["node_id"], 0)
 
 print("Topology built.")
